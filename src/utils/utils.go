@@ -32,7 +32,7 @@ func CheckToken() gin.HandlerFunc {
 			tokenString := c.GetHeader("Authorization")
 			_, _, err := parseToken(tokenString)
 			if err != nil {
-				c.JSON(400, gin.H{"message": "登陆过期，请重新登陆"})
+				c.JSON(400, gin.H{"message": "登陆过期，请重新登陆!"})
 				return
 			}
 		}
