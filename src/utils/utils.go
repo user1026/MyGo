@@ -1,10 +1,7 @@
 package utils
 
 import (
-<<<<<<< HEAD
 	"fmt"
-=======
->>>>>>> 8305f918e55a1711e3d120a7f69d55a17b0d9af5
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -33,7 +30,6 @@ func CheckToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		path := c.Request.URL.Path
 		if strings.Index(path, "login") < 0 {
-<<<<<<< HEAD
 			tokenString := c.GetHeader("Token")
 			_, claims, err := parseToken(tokenString)
 			if err != nil {
@@ -41,14 +37,7 @@ func CheckToken() gin.HandlerFunc {
 				return
 			}
 			fmt.Println(claims)
-=======
-			tokenString := c.GetHeader("Authorization")
-			_, _, err := parseToken(tokenString)
-			if err != nil {
-				c.JSON(400, gin.H{"message": "登陆过期，请重新登陆"})
-				return
-			}
->>>>>>> 8305f918e55a1711e3d120a7f69d55a17b0d9af5
+
 		}
 		c.Next()
 	}
