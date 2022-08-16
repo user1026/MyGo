@@ -2,6 +2,7 @@ package DataBase
 
 import (
 	"fmt"
+	"gin01/src/config"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
@@ -9,11 +10,11 @@ import (
 var Db *sqlx.DB
 
 func Init() {
-	database, err := sqlx.Open("mysql", "user:123456@tcp(localhost:9906)/user")
+	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s", config.UserName, config.Password, config.Port, config.MysqlName)
+	database, err := sqlx.Open(config.SqlType, dataSourceName)
 	//database, err := sqlx.Open("数据库类型", "用户名:密码@tcp(地址:端口)/数据库名")
 	if err != nil {
 		fmt.Println("数据库链接错误")
-
 	} else {
 		fmt.Println("数据库链接成功")
 	}

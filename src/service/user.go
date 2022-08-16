@@ -17,14 +17,6 @@ type Claims struct {
 	ExpiryTime int
 	jwt.StandardClaims
 }
-type User struct {
-	Username string `form:"username" json:"username" binding:"required"`
-	Password string `form:"password" json:"password" binding:"required"`
-}
-
-type UserRoleId struct {
-	RoleId string `form:"roleid" json:"roleid"`
-}
 
 func TestUrl(c *gin.Context) {
 	var form DataBase.User
@@ -32,7 +24,7 @@ func TestUrl(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	uid := DataBase.UserSelect(form)
+	uid := form.Select()
 	c.JSON(200, gin.H{"uid": uid})
 }
 func Login(c *gin.Context) {
@@ -42,13 +34,13 @@ func Login(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "缺少必要数据"})
 		return
 	}
-	user := DataBase.UserSelect(form)
-	if user.Uid == "" {
+	user := form.Select()
+	if user == true {
 
 		return
 	}
-	tokenString := createToken(&user)
-	c.JSON(200, gin.H{"code": 200, "token": tokenString})
+	//tokenString := createToken(&user)
+	c.JSON(200, gin.H{"code": 200})
 	//c.String(http.StatusOK, "/index")
 }
 
@@ -96,13 +88,13 @@ func AddUser(c *gin.Context) {
 
 }
 func EditUser(c *gin.Context) {
-	var form DataBase.UserInfo
-	err := c.ShouldBindJSON(&form)
-	if err != nil {
-
-	}
-	message := DataBase.EditUser(form)
-	c.JSON(200, gin.H{message: message})
+	//var form DataBase.UserInfo
+	//err := c.ShouldBindJSON(&form)
+	//if err != nil {
+	//
+	//}
+	//message := DataBase.EditUser(form)
+	//c.JSON(200, gin.H{message: message})
 }
 func DelUser(c *gin.Context) {
 
