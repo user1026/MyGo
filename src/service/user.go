@@ -2,7 +2,6 @@ package service
 
 import (
 	"fmt"
-
 	"gin01/src/DataBase"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
