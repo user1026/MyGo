@@ -1,14 +1,14 @@
 package main
 
 import (
-	"gin01/src/DataBase"
-	"gin01/src/routes"
+	"fmt"
+	"gin01/src/utils"
 )
 
 func main() {
-
-	DataBase.Init()
-	r := routes.Routes()
-	r.Run(":9000")
-	defer DataBase.Db.Close()
+	fmt.Println(utils.GetNowTimeByOptions(true, "p", false, ""))
+	//DataBase.Init()
+	//r := routes.Routes()
+	//r.Run(":9000")
+	//defer DataBase.Db.Close()
 }
