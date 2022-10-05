@@ -8,7 +8,7 @@ import (
 func Routes() *gin.Engine {
 	r := gin.Default()
 	r.Use(model.Allow())
-	r.Use(model.CheckToken())
+	//r.Use(model.CheckToken())
 	LoginRoute(r)
 	return r
 }

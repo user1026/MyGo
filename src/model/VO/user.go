@@ -1,7 +1,7 @@
 package VO
 
 type UserInfo struct {
-	Username   string `form:"username" json:"username"`
+	UserName   string `form:"username" json:"username"`
 	Uid        string `form:"uid" json:"uid" `
 	Age        string `form:"age" json:"age"`
 	Sex        string `form:"sex" json:"sex"`
@@ -12,6 +12,12 @@ type UserInfo struct {
 }
 
 type User struct {
-	Username string `db:"username" form:"username" json:"username" binding:"required"`
-	Password string `db:"password" form:"password" json:"password" binding:"required"`
+	Username string `db:"userName" form:"username"  binding:"required"`
+	Password string `db:"passWord" form:"password"  binding:"required"`
+}
+type Customer struct {
+	ipCode   string
+	inTime   string
+	outTime  string
+	openTime string
 }

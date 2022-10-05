@@ -40,6 +40,14 @@ func (info UserInfo) Delete() int {
 func (info UserInfo) Insert() int {
 	return 1
 }
-func (u User) Select() bool {
-	return true
+func (u User) Select() (string, error) {
+	var userinfo []UserInfo
+	err := Db.Select(&userinfo, "select uid from user where userName=? and passWord=?", u.Username, u.Password)
+	if err != nil {
+		return "", err
+	}
+	if len(userinfo) > 0 {
+		return userinfo[0].Uid, nil
+	}
+	return "", nil
 }
