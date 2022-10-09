@@ -2,48 +2,23 @@ package service
 
 import (
 	"gin01/src/DataBase"
+	"gin01/src/model"
 	"github.com/gin-gonic/gin"
 )
 
-func TestUrl(c *gin.Context) {
-	var form DataBase.User
-	err := c.ShouldBindJSON(&form)
+func GetUid(user DataBase.User) (string, error) {
+	uid, err := user.Select()
 	if err != nil {
-		return
+		return "", err
 	}
-	uid, err := form.Select()
-	if err != nil {
-		c.JSON(500, gin.H{"message": "程序出错"})
-		return
-	}
-	if uid == "" {
-
-	}
-
-	c.JSON(200, gin.H{"uid": uid})
+	return uid, nil
 }
-func Login(c *gin.Context) {
-	var form DataBase.User
-	err := c.ShouldBindJSON(&form)
+func GetToken(uid string) (string, error) {
+	token, err := model.CreateToken(uid)
 	if err != nil {
-		c.JSON(400, gin.H{"error": "缺少必要数据"})
-		return
+		return "", err
 	}
-	user, e := form.Select()
-	if e != nil {
-
-		return
-	}
-	if user != "" {
-		c.JSON(200, gin.H{"code": 200})
-	}
-	//tokenString := createToken(&user)
-
-	//c.String(http.StatusOK, "/index")
-}
-
-func Getuserinfo(c *gin.Context) {
-
+	return token, nil
 }
 
 func AddUser(c *gin.Context) {
