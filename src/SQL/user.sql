@@ -1,0 +1,2 @@
+INSERT INTO `user` (`uid`, `userName`, `uIpCode`, `createTime`, `updateTime`, `roleId`, `age`, `sex`, `phoneNum`, `passWord`, `token`) VALUES ('1', '1', '2', '2022-09-10 23:25:52', '2022-10-06 23:26:03', '1', '1', '1', '1', '123', NULL);
+INSERT INTO `user` (`uid`, `userName`, `uIpCode`, `createTime`, `updateTime`, `roleId`, `age`, `sex`, `phoneNum`, `passWord`, `token`) VALUES ('2', '2', '21', '2022-10-05 23:26:31', '2022-10-05 23:26:42', '1', '123', '2', '123', '333', NULL);
