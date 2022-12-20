@@ -3,7 +3,9 @@ package service
 import (
 	"gin01/src/DataBase"
 	"gin01/src/model"
-	"github.com/gin-gonic/gin"
+	"gin01/src/utils"
+	"strconv"
+	"time"
 )
 
 func GetUid(user DataBase.User) (string, error) {
@@ -21,21 +23,25 @@ func GetToken(uid string) (string, error) {
 	return token, nil
 }
 
-func AddUser(c *gin.Context) {
+func AddUser(user DataBase.UserInfo) (bool, error) {
+	user.CreateTime = utils.GetNowTime()
+	user.Uid = strconv.FormatInt(time.Now().Unix(), 10)
+	_, err := user.Insert()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+func EditUser(user DataBase.UserInfo) {
 
 }
-func EditUser(c *gin.Context) {
-	//var form DataBase.UserInfo
-	//err := c.ShouldBindJSON(&form)
-	//if err != nil {
-	//
-	//}
-	//message := DataBase.EditUser(form)
-	//c.JSON(200, gin.H{message: message})
+func DelUser(user DataBase.UserInfo) error {
+	err := user.Delete()
+	if err != nil {
+		return err
+	}
+	return nil
 }
-func DelUser(c *gin.Context) {
-
-}
-func SelectUser(c *gin.Context) {
+func SelectUser() {
 
 }

@@ -43,7 +43,6 @@ func ParseToken(tokenString string) (*jwt.Token, *Claims, error) {
 	})
 	if err != nil {
 		fmt.Println(err, "token解析出错")
-
 	}
 	return token, Claims, err
 }
@@ -53,15 +52,13 @@ func CheckToken() gin.HandlerFunc {
 		if strings.Index(path, "login") < 0 {
 			tokenString := c.GetHeader("Token")
 			_, claims, err := ParseToken(tokenString)
-			fmt.Println(claims)
-			fmt.Println(c.Request.Body)
+			fmt.Println(claims.UserId)
+			//isLogin := DataBase.SelectById(claims.UserId)
 
 			if err != nil {
 				c.JSON(400, gin.H{"message": "登陆过期，请重新登陆!"})
 				return
 			}
-			fmt.Println(claims)
-
 		}
 		c.Next()
 	}

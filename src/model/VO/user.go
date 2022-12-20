@@ -5,10 +5,12 @@ type UserInfo struct {
 	Uid        string `form:"uid" json:"uid" `
 	Age        string `form:"age" json:"age"`
 	Sex        string `form:"sex" json:"sex"`
-	UipCode    string `form:"uipcode" json:"uipCode"`
-	RoleId     string `form:"roleId" json:"roleId"`
+	PhoneNum   string `form:"phoneNum" json:"phoneNum"`
+	UipCode    string `form:"uipCode" json:"uipCode" `
+	RoleId     string `form:"roleId" json:"roleId" `
 	CreateTime string `form:"createTime" json:"createTime"`
 	UpdateTime string `form:"updateTime" json:"updateTime"`
+	Token      string `json:"token"`
 }
 
 type User struct {
