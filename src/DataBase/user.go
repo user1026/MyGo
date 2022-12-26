@@ -26,6 +26,9 @@ func SelectById(id string) UserInfo {
 func (info UserInfo) SelectByWhere() []UserInfo {
 	var userinfo = make([]UserInfo, info.Size)
 
+	if info.UserName != "" {
+
+	}
 	return userinfo
 }
 func (info UserInfo) SelectOnLogin(user User) string {
