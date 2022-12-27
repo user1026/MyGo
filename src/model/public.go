@@ -1,4 +1,4 @@
-package VO
+package model
 
 type Page struct {
 	Size int `json:"size" form:"size"`

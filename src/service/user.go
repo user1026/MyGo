@@ -2,7 +2,7 @@ package service
 
 import (
 	"gin01/src/DataBase"
-	"gin01/src/model"
+	"gin01/src/middleware"
 	"gin01/src/utils"
 	"strconv"
 	"time"
@@ -16,7 +16,7 @@ func GetUid(user DataBase.User) (string, error) {
 	return uid, nil
 }
 func GetToken(uid string) (string, error) {
-	token, err := model.CreateToken(uid)
+	token, err := middleware.CreateToken(uid)
 	if err != nil {
 		return "", err
 	}

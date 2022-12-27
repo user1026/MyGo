@@ -1,15 +1,15 @@
 package DataBase
 
 import (
-	"gin01/src/model/VO"
+	"gin01/src/model"
 )
 
 type UserInfo struct {
-	VO.UserInfo
-	VO.Page
+	model.UserInfo
+	model.Page
 }
 type User struct {
-	VO.User
+	model.User
 }
 type UserDao interface {
 	SelectByWhere() []UserInfo

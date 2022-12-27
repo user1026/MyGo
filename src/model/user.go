@@ -1,4 +1,4 @@
-package VO
+package model
 
 type UserInfo struct {
 	UserName   string `form:"username" json:"username"`

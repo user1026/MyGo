@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gin01/src/config"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -19,4 +20,14 @@ func Init() {
 		fmt.Println("数据库链接成功")
 	}
 	Db = database
+}
+func InitDb() *gorm.DB {
+	DbStr := fmt.Sprintf("#{config.UserName}:#{config.Password}@/#{config.MysqlName}?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open(config.SqlType, DbStr)
+	if err != nil {
+		fmt.Println("数据库链接错误")
+	} else {
+		fmt.Println("数据库链接成功")
+	}
+	return db
 }
