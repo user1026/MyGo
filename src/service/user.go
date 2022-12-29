@@ -23,24 +23,26 @@ func GetToken(uid string) (string, error) {
 	return token, nil
 }
 
-func AddUser(user DataBase.UserInfo) (bool, error) {
+func AddUser(user DataBase.AddUserInfo) bool {
 	user.CreateTime = utils.GetNowTime()
+	user.UpdateTime = utils.GetNowTime()
+	user.Password = "123456"
 	user.Uid = strconv.FormatInt(time.Now().Unix(), 10)
-	_, err := user.Insert()
-	if err != nil {
-		return false, err
+	res := user.Insert()
+	if res == true {
+		return true
 	}
-	return true, nil
+	return false
 }
 func EditUser(user DataBase.UserInfo) {
 
 }
-func DelUser(user DataBase.UserInfo) error {
-	err := user.Delete()
-	if err != nil {
-		return err
+func DelUser(user DataBase.UserInfo) bool {
+	res := user.Delete()
+	if res == true {
+		return true
 	}
-	return nil
+	return false
 }
 func SelectUser() {
 

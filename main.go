@@ -8,16 +8,18 @@ import (
 )
 
 func main() {
-
 	global.GLOBAL_DB = DataBase.InitDb()
-
 	DB := global.GLOBAL_DB.DB()
 	defer func() {
 		if err := DB.Close(); err != nil {
 			fmt.Println("数据库关闭失败")
 		}
 	}()
-	r := routes.Routes()
-	r.Run(":9000")
+	router := routes.Routes()
+	if err := router.Run(":9000"); err != nil {
+		fmt.Println("端口9000启动失败:", err)
+	} else {
+		fmt.Println("端口9000启动成功")
+	}
 
 }
