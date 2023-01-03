@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gin01/src/DataBase"
 	"gin01/src/service"
+	"gin01/src/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,10 +22,13 @@ func Login(c *gin.Context) {
 	uid, uidErr := service.GetUid(form)
 	token, tokenErr := service.GetToken(uid)
 	if uidErr != nil || tokenErr != nil {
-		c.JSON(500, gin.H{"code": 500, "message": "登陆失败，稍后重试"})
+		utils.FailWithMsg("登陆失败，稍后重试", c)
+		//c.JSON(500, gin.H{"code": 500, "message": "登陆失败，稍后重试"})
 		return
 	}
-	c.JSON(200, gin.H{"token": token})
+	var t = map[string]string{"token": token}
+	utils.OKWithData(t, c)
+	//c.JSON(200, gin.H{"token": token})
 }
 func Logout(c *gin.Context) {
 	fmt.Println("123")

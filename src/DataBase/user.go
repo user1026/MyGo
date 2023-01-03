@@ -8,12 +8,8 @@ import (
 type UserInfo struct {
 	model.UserInfo
 }
-type AddUserInfo struct {
-	model.UserInfo
-	Password string `db:"passWord" form:"password"  gorm:"column:Password"`
-}
 
-func (AddUserInfo) TableName() string {
+func (UserInfo) TableName() string {
 	return "user"
 }
 
@@ -31,15 +27,18 @@ func (User) TableName() string {
 
 type UserDao interface {
 	SelectByWhere() []model.UserInfo
+	SelectById() model.UserInfo
 	Update() bool
 	Delete() bool
 	Insert() bool
 }
 
-func SelectById(id string) model.UserInfo {
+func SelectById(id string) (model.UserInfo, error) {
 	var userInfo model.UserInfo
-	Db.Select(&userInfo, "", id)
-	return userInfo
+	if res := Db.Table("user").Select("UserName", "UIpCode", "age", "sex", "PhoneNum").Where("uid=?", id).First(&userInfo); res.Error != nil {
+		return userInfo, res.Error
+	}
+	return userInfo, nil
 }
 func (info UserInfoByPage) SelectByWhere() []model.UserInfo {
 	var userinfo = make([]model.UserInfo, info.Size)
@@ -59,7 +58,7 @@ func (info UserInfo) Delete() bool {
 
 	return false
 }
-func (info AddUserInfo) Insert() bool {
+func (info UserInfo) Insert() bool {
 	if result := Db.Create(&info); result.Error == nil {
 		fmt.Println("插入成功")
 		return true
@@ -68,6 +67,10 @@ func (info AddUserInfo) Insert() bool {
 }
 
 func (u User) Select() (string, error) {
-
-	return "", nil
+	var userinfo UserInfo
+	res := Db.Table("user").Where("username=? and password=?", u.Username, u.Password).First(&userinfo)
+	if res.Error != nil {
+		return "", res.Error
+	}
+	return userinfo.Uid, nil
 }

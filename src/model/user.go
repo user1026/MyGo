@@ -2,6 +2,7 @@ package model
 
 type UserInfo struct {
 	UserName   string `form:"userName" json:"userName" gorm:"column:UserName"`
+	Password   string `form:"passWord" form:"password"  gorm:"column:PassWord"`
 	Uid        string `form:"uid" json:"uid" gorm:"column:Uid"`
 	Age        string `form:"age" json:"age" gorm:"column:Age"`
 	Sex        string `form:"sex" json:"sex" gorm:"column:Sex"`

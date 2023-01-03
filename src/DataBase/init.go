@@ -3,8 +3,8 @@ package DataBase
 import (
 	"fmt"
 	"gin01/src/config"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var Db *gorm.DB
@@ -21,9 +21,9 @@ var Db *gorm.DB
 	Db = database
 }*/
 func InitDb() *gorm.DB {
-	DbStr := fmt.Sprintf("%s:%s@/%s?charset=utf8&parseTime=True&loc=Local", config.UserName, config.Password, config.MysqlName)
+	DbStr := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True", config.UserName, config.Password, config.IP, config.Port, config.MysqlName)
 	fmt.Println(DbStr)
-	db, err := gorm.Open(config.SqlType, DbStr)
+	db, err := gorm.Open(mysql.Open(DbStr), &gorm.Config{})
 	if err != nil {
 		fmt.Println("数据库链接错误", err)
 	} else {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gin01/src/DataBase"
 	"gin01/src/service"
+	"gin01/src/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +19,7 @@ func UserRouter(e *gin.Engine) {
 	}
 }
 func AddUser(c *gin.Context) {
-	var userInfo DataBase.AddUserInfo
+	var userInfo DataBase.UserInfo
 	if getUserInfoErr := c.ShouldBindJSON(&userInfo); getUserInfoErr != nil {
 		fmt.Println(userInfo)
 		c.JSON(400, gin.H{"message": "缺乏必要参数"})
@@ -42,5 +43,16 @@ func SelectUser(c *gin.Context) {
 
 }
 func SelectUserById(c *gin.Context) {
+	var user DataBase.UserInfo
+	if err := c.ShouldBindJSON(&user); err != nil {
+		utils.FailWithMsg("未获取到uid", c)
+		return
+	}
 
+	userinfo, err := service.SelectUserById(user.Uid)
+	if err != nil {
+		utils.FailWithMsg("查询失败", c)
+		return
+	}
+	utils.OKWithData(map[string]interface{}{"userinfo": userinfo}, c)
 }

@@ -9,7 +9,10 @@ import (
 
 func main() {
 	global.GLOBAL_DB = DataBase.InitDb()
-	DB := global.GLOBAL_DB.DB()
+	DB, err := global.GLOBAL_DB.DB()
+	if err != nil {
+		fmt.Println("获取通用数据库对象失败")
+	}
 	defer func() {
 		if err := DB.Close(); err != nil {
 			fmt.Println("数据库关闭失败")
