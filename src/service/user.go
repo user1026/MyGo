@@ -9,14 +9,19 @@ import (
 	"time"
 )
 
-func GetUid(user DataBase.User) (string, error) {
-	uid, err := user.Select()
+type UserService struct {
+}
+
+var dataApi = DataBase.DataApi
+
+func (u *UserService) GetUid(user DataBase.User) (string, error) {
+	uid, err := dataApi.Select(user)
 	if err != nil {
 		return "", err
 	}
 	return uid, nil
 }
-func GetToken(uid string) (string, error) {
+func (u *UserService) GetToken(uid string) (string, error) {
 	token, err := middleware.CreateToken(uid)
 	if err != nil {
 		return "", err
@@ -24,22 +29,22 @@ func GetToken(uid string) (string, error) {
 	return token, nil
 }
 
-func AddUser(user DataBase.UserInfo) bool {
+func (u *UserService) AddUser(user DataBase.UserInfo) bool {
 	user.CreateTime = utils.GetNowTime()
 	user.UpdateTime = utils.GetNowTime()
 	user.Password = "123456"
 	user.Uid = strconv.FormatInt(time.Now().Unix(), 10)
-	res := user.Insert()
+	res := dataApi.Insert(user)
 	if res == true {
 		return true
 	}
 	return false
 }
-func EditUser(user DataBase.UserInfo) {
+func (u *UserService) EditUser(user DataBase.UserInfo) {
 
 }
-func DelUser(user DataBase.UserInfo) bool {
-	res := user.Delete()
+func (u *UserService) DelUser(user DataBase.UserInfo) bool {
+	res := dataApi.Delete()
 	if res == true {
 		return true
 	}
@@ -48,8 +53,8 @@ func DelUser(user DataBase.UserInfo) bool {
 func SelectUser() {
 
 }
-func SelectUserById(id string) (model.UserInfo, error) {
-	userinfo, err := DataBase.SelectById(id)
+func (u *UserService) SelectUserById(id string) (model.UserInfo, error) {
+	userinfo, err := dataApi.SelectById(id)
 	if err != nil {
 		return userinfo, err
 	}

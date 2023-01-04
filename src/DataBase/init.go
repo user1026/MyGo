@@ -20,6 +20,12 @@ var Db *gorm.DB
 	}
 	Db = database
 }*/
+type DataApiGroup struct {
+	UserApi
+}
+
+var DataApi = new(DataApiGroup)
+
 func InitDb() *gorm.DB {
 	DbStr := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True", config.UserName, config.Password, config.IP, config.Port, config.MysqlName)
 	fmt.Println(DbStr)

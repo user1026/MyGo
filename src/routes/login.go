@@ -3,7 +3,6 @@ package routes
 import (
 	"fmt"
 	"gin01/src/DataBase"
-	"gin01/src/service"
 	"gin01/src/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -19,8 +18,8 @@ func Login(c *gin.Context) {
 		c.JSON(400, gin.H{"message": "缺少必要参数"})
 		return
 	}
-	uid, uidErr := service.GetUid(form)
-	token, tokenErr := service.GetToken(uid)
+	uid, uidErr := serv.GetUid(form)
+	token, tokenErr := serv.GetToken(uid)
 	if uidErr != nil || tokenErr != nil {
 		utils.FailWithMsg("登陆失败，稍后重试", c)
 		//c.JSON(500, gin.H{"code": 500, "message": "登陆失败，稍后重试"})
@@ -36,19 +35,5 @@ func Logout(c *gin.Context) {
 	fmt.Println("3333")
 }
 func TestUrl(c *gin.Context) {
-	var form DataBase.User
-	err := c.ShouldBindJSON(&form)
-	if err != nil {
-		return
-	}
-	uid, err := form.Select()
-	if err != nil {
-		c.JSON(500, gin.H{"message": "程序出错"})
-		return
-	}
-	if uid == "" {
 
-	}
-
-	c.JSON(200, gin.H{"uid": uid})
 }

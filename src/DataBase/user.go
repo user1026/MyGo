@@ -25,6 +25,8 @@ func (User) TableName() string {
 	return "user"
 }
 
+type UserApi struct {
+}
 type UserDao interface {
 	SelectByWhere() []model.UserInfo
 	SelectById() model.UserInfo
@@ -33,32 +35,32 @@ type UserDao interface {
 	Insert() bool
 }
 
-func SelectById(id string) (model.UserInfo, error) {
+func (u *UserApi) SelectById(id string) (model.UserInfo, error) {
 	var userInfo model.UserInfo
 	if res := Db.Table("user").Select("UserName", "UIpCode", "age", "sex", "PhoneNum").Where("uid=?", id).First(&userInfo); res.Error != nil {
 		return userInfo, res.Error
 	}
 	return userInfo, nil
 }
-func (info UserInfoByPage) SelectByWhere() []model.UserInfo {
-	var userinfo = make([]model.UserInfo, info.Size)
+func (u *UserApi) SelectByWhere(info UserInfo, size int) []model.UserInfo {
+	var userinfo = make([]model.UserInfo, size)
 
 	if info.UserName != "" {
 
 	}
 	return userinfo
 }
-func (info UserInfo) SelectOnLogin(user User) string {
+func (u *UserApi) SelectOnLogin(user User) string {
 	return "123"
 }
-func (info UserInfo) Update() bool {
+func (u *UserApi) Update() bool {
 	return false
 }
-func (info UserInfo) Delete() bool {
+func (u *UserApi) Delete() bool {
 
 	return false
 }
-func (info UserInfo) Insert() bool {
+func (u *UserApi) Insert(info UserInfo) bool {
 	if result := Db.Create(&info); result.Error == nil {
 		fmt.Println("插入成功")
 		return true
@@ -66,9 +68,9 @@ func (info UserInfo) Insert() bool {
 	return false
 }
 
-func (u User) Select() (string, error) {
+func (u *UserApi) Select(user User) (string, error) {
 	var userinfo UserInfo
-	res := Db.Table("user").Where("username=? and password=?", u.Username, u.Password).First(&userinfo)
+	res := Db.Table("user").Where("username=? and password=?", user.Username, user.Password).First(&userinfo)
 	if res.Error != nil {
 		return "", res.Error
 	}

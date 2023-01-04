@@ -3,7 +3,6 @@ package routes
 import (
 	"fmt"
 	"gin01/src/DataBase"
-	"gin01/src/service"
 	"gin01/src/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -18,6 +17,7 @@ func UserRouter(e *gin.Engine) {
 		user.POST("/selectById", SelectUserById)
 	}
 }
+
 func AddUser(c *gin.Context) {
 	var userInfo DataBase.UserInfo
 	if getUserInfoErr := c.ShouldBindJSON(&userInfo); getUserInfoErr != nil {
@@ -25,7 +25,7 @@ func AddUser(c *gin.Context) {
 		c.JSON(400, gin.H{"message": "缺乏必要参数"})
 		return
 	}
-	res := service.AddUser(userInfo)
+	res := serv.AddUser(userInfo)
 	if res != true {
 		c.JSON(500, gin.H{"message": "添加失败"})
 		return
@@ -49,7 +49,7 @@ func SelectUserById(c *gin.Context) {
 		return
 	}
 
-	userinfo, err := service.SelectUserById(user.Uid)
+	userinfo, err := serv.SelectUserById(user.Uid)
 	if err != nil {
 		utils.FailWithMsg("查询失败", c)
 		return

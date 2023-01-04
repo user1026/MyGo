@@ -7,6 +7,8 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/jmoiron/sqlx v1.3.4
+	gorm.io/driver/mysql v1.4.4
+	gorm.io/gorm v1.24.2
 )
 
 require (
@@ -50,6 +52,4 @@ require (
 	golang.org/x/sys v0.0.0-20220915200043-7b5979e65e41 // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gorm.io/driver/mysql v1.4.4 // indirect
-	gorm.io/gorm v1.24.2 // indirect
 )
