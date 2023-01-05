@@ -2,7 +2,7 @@ package routes
 
 import (
 	"fmt"
-	"gin01/src/DataBase"
+	"gin01/src/model"
 	"gin01/src/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +13,7 @@ func LoginRoute(e *gin.Engine) {
 	e.POST("/logout", Logout)
 }
 func Login(c *gin.Context) {
-	var form DataBase.User
+	var form model.Login
 	if err := c.ShouldBindJSON(&form); err != nil {
 		c.JSON(400, gin.H{"message": "缺少必要参数"})
 		return

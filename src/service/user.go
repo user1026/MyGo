@@ -14,7 +14,7 @@ type UserService struct {
 
 var dataApi = DataBase.DataApi
 
-func (u *UserService) GetUid(user DataBase.User) (string, error) {
+func (u *UserService) GetUid(user model.Login) (string, error) {
 	uid, err := dataApi.Select(user)
 	if err != nil {
 		return "", err
@@ -29,7 +29,7 @@ func (u *UserService) GetToken(uid string) (string, error) {
 	return token, nil
 }
 
-func (u *UserService) AddUser(user DataBase.UserInfo) bool {
+func (u *UserService) AddUser(user model.UserInfo) bool {
 	user.CreateTime = utils.GetNowTime()
 	user.UpdateTime = utils.GetNowTime()
 	user.Password = "123456"
@@ -40,15 +40,23 @@ func (u *UserService) AddUser(user DataBase.UserInfo) bool {
 	}
 	return false
 }
-func (u *UserService) EditUser(user DataBase.UserInfo) {
-
-}
-func (u *UserService) DelUser(user DataBase.UserInfo) bool {
-	res := dataApi.Delete()
-	if res == true {
+func (u *UserService) EditUser(user model.EditUserInfo) bool {
+	user.UpdateTime = utils.GetNowTime()
+	if res := dataApi.Update(user); res {
 		return true
 	}
 	return false
+}
+func (u *UserService) DelUser(user model.UserInfo) (bool, string) {
+	_, err := dataApi.SelectById(user.Uid)
+	if err != nil {
+		return false, "数据库无匹配数据"
+	}
+	res := dataApi.Delete(user.Uid)
+	if res == true {
+		return true, ""
+	}
+	return false, "删除失败"
 }
 func SelectUser() {
 
