@@ -13,8 +13,8 @@ func UserRouter(e *gin.Engine) {
 		user.POST("/add", AddUser)
 		user.POST("/delete", DeleteUser)
 		user.POST("/edit", EditUser)
-		user.POST("/select", SelectUser)
-		user.POST("/selectById", SelectUserById)
+		user.POST("/query", QueryUser)
+		user.POST("/queryById", QueryUserById)
 	}
 }
 
@@ -57,10 +57,10 @@ func DeleteUser(c *gin.Context) {
 	}
 	utils.OKWithMsg("删除成功", c)
 }
-func SelectUser(c *gin.Context) {
+func QueryUser(c *gin.Context) {
 
 }
-func SelectUserById(c *gin.Context) {
+func QueryUserById(c *gin.Context) {
 	var user model.UserInfo
 	if err := c.ShouldBindJSON(&user); err != nil {
 		utils.FailWithMsg("未获取到uid", c)
